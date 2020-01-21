@@ -9,7 +9,7 @@ def handler(event, context):
         
         res = json.loads(event['body']);
         
-        if 'action' not in res or 'client' not in res:
+        if 'id' not in res or 'quantity' not in res:
         
             raise Exception("Malformed data")
         
@@ -20,13 +20,13 @@ def handler(event, context):
             QueueUrl=os.getenv('EVENT_SERVICE_URL'),
             MessageBody='test',
             MessageAttributes={
-                'action': {
-                    'StringValue': res['action'],
+                'id': {
+                    'StringValue': res['id'],
                     'DataType': 'String'
                 },
-                'client': {
-                    'StringValue': res['client'],
-                    'DataType': 'String'
+                'quantity': {
+                    'StringValue': str(res['quantity']),
+                    'DataType': 'Number'
                 }
             }
         )
