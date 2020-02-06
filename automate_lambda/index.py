@@ -9,7 +9,7 @@ def handler(event, context):
         
         res = json.loads(event['body']);
         
-        if 'id' not in res or 'quantity' not in res:
+        if 'id' not in res or 'name' not in res or 'price' not in res or 'description' not in res or 'grade' not in res:
         
             raise Exception("Malformed data")
         
@@ -24,10 +24,23 @@ def handler(event, context):
                     'StringValue': res['id'],
                     'DataType': 'String'
                 },
-                'quantity': {
-                    'StringValue': str(res['quantity']),
+                'name': {
+                    'StringValue': str(res['name']),
+                    'DataType': 'String'
+                }
+                'price': {
+                    'StringValue': str(res['price']),
                     'DataType': 'Number'
                 }
+                'description': {
+                    'StringValue': str(res['description']),
+                    'DataType': 'String'
+                }
+                'grade': {
+                    'StringValue': str(res['grade']),
+                    'DataType': 'Number'
+                }
+
             }
         )
         
