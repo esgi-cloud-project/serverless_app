@@ -51,5 +51,5 @@ resource "aws_lambda_permission" "automate_lambda" {
   function_name = "${aws_lambda_function.automate_lambda.arn}"
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_api_gateway_deployment.automate_lambda.execution_arn}/*/*"
+  source_arn = "${aws_api_gateway_deployment.automate_lambda.execution_arn}/*"
 }
