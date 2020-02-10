@@ -19,7 +19,7 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "iam_policies_automate_lambda" {
-  role= "${aws_iam_role.iam_automate_lambda.name}"
+  role= aws_iam_role.iam_automate_lambda.name
   policy_arn= "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
 }
 
@@ -35,8 +35,8 @@ resource "aws_lambda_function" "automate_lambda" {
     function_name = "esgi_cloud_cps_lambda_trigger"
     handler = "index.handler"
     runtime = "python3.8"
-    role = "${aws_iam_role.iam_automate_lambda.arn}"
-    source_code_hash = "${data.archive_file.lambda.output_base64sha256}"
+    role = aws_iam_role.iam_automate_lambda.arn
+    source_code_hash = data.archive_file.lambda.output_base64sha256
     environment {
         variables = {
            EVENT_SERVICE_URL = var.sqs_id, 
@@ -48,7 +48,7 @@ resource "aws_lambda_function" "automate_lambda" {
 resource "aws_lambda_permission" "automate_lambda" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = "${aws_lambda_function.automate_lambda.arn}"
+  function_name = aws_lambda_function.automate_lambda.arn
   principal     = "apigateway.amazonaws.com"
 
   source_arn = "${aws_api_gateway_deployment.automate_lambda.execution_arn}/*"

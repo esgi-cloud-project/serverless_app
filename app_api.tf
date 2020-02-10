@@ -28,10 +28,10 @@ resource "aws_api_gateway_integration" "automate_lambda" {
 
 resource "aws_api_gateway_deployment" "automate_lambda" {
   depends_on = [
-    "aws_api_gateway_integration.automate_lambda"
+    aws_api_gateway_integration.automate_lambda
   ]
 
-  rest_api_id = "${aws_api_gateway_rest_api.automate_lambda.id}"
+  rest_api_id = aws_api_gateway_rest_api.automate_lambda.id
   stage_name  = "test"
 }
 
